@@ -85,6 +85,10 @@ jobs:
           restore-keys: |
             ${{ steps.pre-commit-cache.outputs.result }}-
 
+      - uses: isbang/compose-action@v1.5.1
+        with: 
+          compose-file: ./src/warehouse_ddd_alexandra/docker-compose.yml
+        
       - name: Run Nox
         run: |
           nox --python=${{ matrix.python }}
@@ -149,4 +153,4 @@ jobs:
         uses: codecov/codecov-action@v3.1.0
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-          
+
