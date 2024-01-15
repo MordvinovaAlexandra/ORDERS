@@ -1,12 +1,17 @@
+from flask import (
+    Blueprint,
+    request,
+    render_template,
+)
+
+from flask_login import login_required
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
 import model
 import repository
 from config import build_db_uri
-from flask import Blueprint
-from flask import render_template
-from flask import request
-from flask_login import login_required
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 
 
 admin = Blueprint("admin", __name__, template_folder="templates")

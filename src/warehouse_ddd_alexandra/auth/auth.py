@@ -1,14 +1,17 @@
-import model
-from config import build_db_uri
-from flask import Blueprint
-from flask import flash
-from flask import redirect
-from flask import render_template
-from flask import request
-from flask_login import login_user
-from flask_login import logout_user
+from flask import (
+    Blueprint,
+    request,
+    render_template,
+    redirect,
+    flash,
+)
+from flask_login import login_user, logout_user
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
+import model
+from config import build_db_uri
 
 
 auth = Blueprint("auth", __name__, static_folder="static", template_folder="templates")

@@ -1,17 +1,17 @@
-version: "3"
+version: '3'
 
 services:
   postgres:
     image: postgres
     restart: always
     environment:
-      POSTGRES_PASSWORD: secretpassword
+      POSTGRES_PASSWORD: 123
       POSTGRES_USER: user
       POSTGRES_DB: orders
     volumes:
       - orders:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "5432:5432"  
 
 volumes:
   orders:

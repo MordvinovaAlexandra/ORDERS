@@ -2,22 +2,20 @@
 import time
 from pathlib import Path
 
-import httpx
 import pytest
-from sqlalchemy import create_engine
-from sqlalchemy import exc
-from sqlalchemy.orm import clear_mappers
-from sqlalchemy.orm import sessionmaker
+import httpx
+from sqlalchemy import create_engine, exc
+from sqlalchemy.orm import sessionmaker, clear_mappers
 from sqlalchemy.sql import text
 
-from warehouse_ddd_petproject import config
-from warehouse_ddd_petproject import db_tables
+from db_tables import metadata, start_mappers
+from config import build_api_url, build_db_uri
 
 
 @pytest.fixture
 def in_memory_db():
     engine = create_engine("sqlite:///:memory:")
-    db_tables.metadata.create_all(engine)
+    metadata.create_all(engine)
     return engine
 
 
@@ -36,7 +34,7 @@ def postgres_db(db_uri):
         except exc.OperationalError:
             time.sleep(DELAY)
         else:
-            db_tables.metadata.create_all(engine)
+            metadata.create_all(engine)
             return engine
 
     pytest.fail("postgres could not start")
@@ -45,7 +43,7 @@ def postgres_db(db_uri):
 @pytest.fixture
 def in_memory_session(in_memory_db):
     try:
-        db_tables.start_mappers()
+        start_mappers()
     except exc.ArgumentError:
         pass
 
@@ -56,7 +54,7 @@ def in_memory_session(in_memory_db):
 @pytest.fixture
 def postgres_session(postgres_db):
     try:
-        db_tables.start_mappers()
+        start_mappers()
     except exc.ArgumentError:
         pass
 
@@ -78,13 +76,13 @@ def fake_session():
 @pytest.fixture(scope="session")
 def db_uri():
     env_path = Path(__file__).parent / ".." / ".env"
-    return config.build_db_uri(env_path)
+    return build_db_uri(env_path)
 
 
 @pytest.fixture
 def api_url():
     env_path = Path(__file__).parent / ".." / ".env"
-    return config.build_api_url(env_path)
+    return build_api_url(env_path)
 
 
 @pytest.fixture

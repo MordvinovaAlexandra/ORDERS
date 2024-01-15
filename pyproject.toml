@@ -2,24 +2,24 @@
 name = "warehouse-ddd"
 version = "0.1.1"
 description = "Warehouse Ddd"
-authors = ["Lex Trofimov <daslef93@gmail.com>"]
+authors = ["Alexandra <MordvinovaAlexandra@gmail.com>"]
 license = "GPL-3.0"
 readme = "README.md"
-homepage = "https://github.com/daslef/warehouse-ddd"
-repository = "https://github.com/daslef/warehouse-ddd"
-documentation = "https://warehouse-ddd.readthedocs.io"
+homepage = "https://github.com/MordvinovaAlexandra/warehouse-ddd"
+repository = "https://github.com/MordvinovaAlexandra/warehouse-ddd"
+documentation = "https://warehouse-ddd-alexandra.readthedocs.io"
 packages = [
-    { include = "warehouse_ddd_petproject", from = "src" },
+    { include = "warehouse_ddd_alexandra", from = "src" },
 ]
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
 ]
 
 [tool.poetry.urls]
-Changelog = "https://github.com/daslef/warehouse-ddd/releases"
+Changelog = "https://github.com/MordvinovaAlexandra/warehouse-ddd/releases"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "3.11.6"
 click = ">=8.0.1"
 sqlalchemy = "^2.0.25"
 psycopg = {extras = ["binary"], version = "^3.1.17"}
@@ -55,7 +55,7 @@ xdoctest = {extras = ["colors"], version = ">=0.15.10"}
 myst-parser = {version = ">=0.16.1"}
 
 [tool.poetry.scripts]
-warehouse-ddd = "warehouse_ddd_petproject.__main__:main"
+warehouse-ddd = "warehouse_ddd_alexandra.__main__:main"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]
@@ -63,7 +63,7 @@ tests = ["tests", "*/tests"]
 
 [tool.coverage.run]
 branch = true
-source = ["warehouse_ddd_petproject", "tests"]
+source = ["warehouse_ddd_alexandra", "tests"]
 
 [tool.coverage.report]
 show_missing = true

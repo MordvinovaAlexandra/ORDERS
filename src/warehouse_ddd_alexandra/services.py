@@ -1,6 +1,6 @@
-from warehouse_ddd_petproject import exceptions
-from warehouse_ddd_petproject import model
-from warehouse_ddd_petproject import repository
+import model
+import repository
+from exceptions import InvalidSku, OutOfStock
 
 
 def allocate(
@@ -9,11 +9,11 @@ def allocate(
     batches = repo.list()
 
     if not any(line.sku == batch.sku for batch in batches):
-        raise exceptions.InvalidSku(f"Invalid sku {line.sku}")
+        raise InvalidSku(f"Invalid sku {line.sku}")
 
     try:
         batchref = model.allocate(line, batches)
-    except exceptions.OutOfStock:
+    except OutOfStock:
         raise
 
     session.commit()
