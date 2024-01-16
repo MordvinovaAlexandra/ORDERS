@@ -82,6 +82,7 @@ def db_uri():
     env_path = Path(__file__).parent / ".." / ".env"
     return config.build_db_uri(env_path)
 
+
 @pytest.fixture
 def test_app():
     app = create_app()

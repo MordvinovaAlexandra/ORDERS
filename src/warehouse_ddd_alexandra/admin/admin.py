@@ -9,14 +9,12 @@ from flask_login import login_required
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-import model
-import repository
-from config import build_db_uri
+from warehouse_ddd_alexandra import model, repository, config
 
 
 admin = Blueprint("admin", __name__, template_folder="templates")
 
-engine = create_engine(build_db_uri(".env"))
+engine = create_engine(config.build_db_uri(".env"))
 get_session = sessionmaker(bind=engine)
 
 
