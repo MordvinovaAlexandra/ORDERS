@@ -2,7 +2,7 @@ from datetime import date
 
 from sqlalchemy.sql import text
 
-import model
+from warehouse_ddd_alexandra import model
 
 
 def test_orderline_mapper_loads_lines(in_memory_session):

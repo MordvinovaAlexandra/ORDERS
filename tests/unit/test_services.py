@@ -1,9 +1,7 @@
 import pytest
 
-import model
-import services
-import exceptions
-from repository import FakeRepository
+from warehouse_ddd_alexandra import model, services, exceptions
+from warehouse_ddd_alexandra.repository import FakeRepository
 
 
 def test_returns_allocation_on_valid_sku(fake_session):

@@ -1,8 +1,7 @@
 from sqlalchemy.sql import text
 
-import model
-import repository
-import helpers
+from warehouse_ddd_alexandra import model, repository
+from tests import helpers
 
 
 def test_repository_can_save_a_batch(in_memory_session):

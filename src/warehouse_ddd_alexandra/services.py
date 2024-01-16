@@ -1,6 +1,5 @@
-import model
-import repository
-from exceptions import InvalidSku, OutOfStock
+from . import model, repository
+from .exceptions import InvalidSku, OutOfStock
 
 
 def allocate(

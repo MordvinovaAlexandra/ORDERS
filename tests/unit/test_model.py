@@ -1,7 +1,6 @@
 from datetime import date, timedelta
-import pytest
 
-from model import Batch, OrderLine
+from warehouse_ddd_alexandra.model import Batch, OrderLine
 
 
 def test_allocating_to_a_batch_reduces_the_available_quantity():

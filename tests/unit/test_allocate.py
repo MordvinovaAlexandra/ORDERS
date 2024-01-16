@@ -1,8 +1,8 @@
 from datetime import date, timedelta
 import pytest
 
-from model import Batch, OrderLine, allocate
-from exceptions import OutOfStock
+from warehouse_ddd_alexandra.model import Batch, OrderLine, allocate
+from warehouse_ddd_alexandra.exceptions import OutOfStock
 
 
 def test_prefers_warehouse_batches_to_shipments():
