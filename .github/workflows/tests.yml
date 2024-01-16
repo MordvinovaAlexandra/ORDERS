@@ -2,7 +2,6 @@ name: Tests
 
 on:
   - push
-  - pull_request
 
 jobs:
   tests:
@@ -59,7 +58,8 @@ jobs:
           poetry lock
           poetry install
           pipx install --pip-args=--constraint=.github/workflows/constraints.txt nox
-          pipx inject nox nox-poetry
+          pipx inject --pip-args=--constraint=.github/workflows/constraints.txt nox nox-poetry
+          nox --version
 
       - name: Compute pre-commit cache key
         if: matrix.session == 'pre-commit'
@@ -75,20 +75,14 @@ jobs:
           result = "${{ runner.os }}-{}-{}-pre-commit".format(python, digest[:8])
 
           print("::set-output name=result::{}".format(result))
-
-      - name: Restore pre-commit cache
-        uses: actions/cache@v3
-        if: matrix.session == 'pre-commit'
+      - name: Start Docker Compose
+        uses: isbang/compose-action@v1.5.1
         with:
-          path: ~/.cache/pre-commit
-          key: ${{ steps.pre-commit-cache.outputs.result }}-${{ hashFiles('.pre-commit-config.yaml') }}
-          restore-keys: |
-            ${{ steps.pre-commit-cache.outputs.result }}-
+          compose-file: "./docker-compose.yml"
 
-      - uses: isbang/compose-action@v1.5.1
-        with: 
-          compose-file: ./src/warehouse_ddd_alexandra/docker-compose.yml
-        
+      - name: Wait
+        run: sleep 10
+
       - name: Run Nox
         run: |
           nox --python=${{ matrix.python }}
@@ -134,7 +128,7 @@ jobs:
           poetry lock
           poetry install
           pipx install --pip-args=--constraint=.github/workflows/constraints.txt nox
-          pipx inject nox nox-poetry
+          pipx inject --pip-args=--constraint=.github/workflows/constraints.txt nox nox-poetry
           nox --version
 
       - name: Download coverage data
@@ -154,4 +148,3 @@ jobs:
         uses: codecov/codecov-action@v3.1.0
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-

@@ -1,13 +1,13 @@
 from flask import Flask
 from flask_login import LoginManager
-from werkzeug.security import gen_salt
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from werkzeug.security import gen_salt
 
 from warehouse_ddd_alexandra import model, db_tables, config
+from warehouse_ddd_alexandra.admin.admin import admin
 from warehouse_ddd_alexandra.api.api import api
 from warehouse_ddd_alexandra.auth.auth import auth
-from warehouse_ddd_alexandra.admin.admin import admin
 
 
 engine = create_engine(config.build_db_uri(".env"))
@@ -37,5 +37,3 @@ def load_user(user_id: str):
 app.register_blueprint(auth, url_prefix="/auth")
 app.register_blueprint(admin, url_prefix="/admin")
 app.register_blueprint(api, url_prefix="/api")
-
-app.run(debug=True)

@@ -10,13 +10,12 @@ from flask_login import login_user, logout_user
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-import model
-from config import build_db_uri
+from warehouse_ddd_alexandra import config, model
 
 
 auth = Blueprint("auth", __name__, static_folder="static", template_folder="templates")
 
-engine = create_engine(build_db_uri(".env"))
+engine = create_engine(config.build_db_uri(".env"))
 get_session = sessionmaker(bind=engine)
 
 
