@@ -2,7 +2,6 @@ from tests.helpers import random_batchref
 from tests.helpers import random_orderid
 from tests.helpers import random_sku
 
-
 def test_returns_allocation_on_valid_sku(add_stock, test_app):
     sku1 = random_sku("spoons")
     sku2 = random_sku("other")

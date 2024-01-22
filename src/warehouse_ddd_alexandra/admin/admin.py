@@ -1,9 +1,6 @@
-from flask import (
-    Blueprint,
-    request,
-    render_template,
-)
+from datetime import date
 
+from flask import Blueprint, request, render_template
 from flask_login import login_required
 
 from sqlalchemy import create_engine
@@ -29,6 +26,11 @@ def admin_batches_view():
         sku = request.form.get("sku")
         qty = request.form.get("qty")
         eta = request.form.get("eta")
+
+        assert isinstance(reference, str)
+        assert isinstance(sku, str)
+        assert isinstance(qty, int)
+        assert isinstance(eta, (date, None))
 
         repo.add(model.Batch(reference, sku, qty, eta))
         session.commit()

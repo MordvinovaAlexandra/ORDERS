@@ -42,7 +42,7 @@ allocations = Table(
 )
 
 
-def start_mappers():
+def start_mappers() -> None:
     lines_mapper = mapper_registry.map_imperatively(model.OrderLine, order_lines)
     mapper_registry.map_imperatively(
         model.Batch,

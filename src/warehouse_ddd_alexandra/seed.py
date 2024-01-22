@@ -2,22 +2,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from . import model, services
-from .repository import SqlAlchemyRepository
+from .repository import SqlAlchemyRepository, Session
 from .config import build_db_uri
 from .db_tables import start_mappers, metadata
 
-engine = create_engine(build_db_uri(".env"))
-get_session = sessionmaker(bind=engine)
-
-try:
-    metadata.create_all(bind=engine)
-    start_mappers()
-except Exception:
-    pass
-
-
-def seed_db():
-    session = get_session()
+def seed_db(session: Session):
     repo = SqlAlchemyRepository(session)
 
     lines = (
@@ -41,5 +30,14 @@ def seed_db():
     for line in lines:
         services.allocate(line, repo, session)
 
+if __name__ == "__main__":
+    engine = create_engine(build_db_uri(".env"))
+    get_session = sessionmaker(bind=engine)
 
-seed_db()
+    try:
+        metadata.create_all(bind=engine)
+        start_mappers()
+    except Exception:
+        pass
+
+seed_db(get_session())
