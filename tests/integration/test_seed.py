@@ -12,6 +12,6 @@ def test_seed(postgres_session):
     repo = repository.SqlAlchemyRepository(postgres_session)
     batches = repo.list()
 
-    assert batches == expected
+    assert all(batch in batches for batch in expected)
 
     

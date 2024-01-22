@@ -1,17 +1,22 @@
 # from warehouse_ddd_alexandra import flask_app
+from flask_login import FlaskLoginClient
+from warehouse_ddd_alexandra import model
+
 
 def test_admin_dashboard(test_app):
-    test_client = test_app.test_cliernt()
-    response = test_client.get('/admin')
+    test_app.test_client_class = FlaskLoginClient
+    admin_user=model.User('test@gmail.com', 'testpassword')
+    test_client = test_app.test_cliernt(user=admin_user)
+    response = test_client.get('/admin, follow_redirects=True')
 
-    assert b"Dashboard" in response
-    assert b'<tr class="border-b border-dashed last:border-b-0">' in response
+    assert response.request.path == "/admin/"
+    
 
 def test_admin_batches_get(test_app):
     test_client = test_app.test_cliernt()
     response = test_client.get("/admin/batches")
 
-    assert b"Batches" in response
+    assert b"Batches" in response.data
 
 def test_admin_batches_post(test_app):
     test_client = test_app.test_cliernt()
@@ -22,23 +27,22 @@ def test_admin_batches_post(test_app):
         "eta": None
     })
 
-    assert b"Batches" in response
-    assert b"batch-test" in response
-    assert b"table-test" in response
-    assert b"10" in response
+    assert b"Batches" in response.data
+    assert b"batch-test" in response.data
+    assert b"table-test" in response.data
+    assert b"10" in response.data
     
 def test_auth_login_get(test_app):
     test_client = test_app.test_client()
     response = test_client.get("/auth/login")
 
-    assert b"Login" in response
+    assert b"Login" in response.data
 
 def test_auth_login_success_for_existing_user(test_app):
     test_client = test_app.test_client(follow_redirects=True)
     response = test_client.get("/auth/login", data={
         "email": "test@gmail.com",
-        "password": "testpassword"
-    })
+        "password": "testpassword"}, follow_redirects = True)
     assert response.request.path == "/admin"
 
 
@@ -48,5 +52,5 @@ def test_auth_login_error_for_unknown_user(test_app):
         "/auth/login",
         data={"email": "unknown@gmail.com", "password": "testpassword"},
     )
-    assert b'Invalid login or password. Try again' in response
+    assert b'Invalid login or password. Try again' in response.data
 

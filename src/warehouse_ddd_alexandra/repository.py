@@ -3,17 +3,17 @@ from sqlalchemy.orm import Session
 from . import model
 
 
-class AbstractRepository(ABC):
+class AbstractRepository(ABC):# pragma: no cover
     @abstractmethod
-    def add(self, batch: model.Batch) -> None:
+    def add(self, batch: model.Batch) -> None:# pragma: no cover
         raise NotImplementedError
 
     @abstractmethod
-    def get(self, reference: str) -> model.Batch:
+    def get(self, reference: str) -> model.Batch:# pragma: no cover
         raise NotImplementedError
 
     @abstractmethod
-    def list(self) -> list[model.Batch]:
+    def list(self) -> list[model.Batch]:# pragma: no cover
         raise NotImplementedError
 
 

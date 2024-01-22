@@ -59,11 +59,12 @@ warehouse-ddd = "warehouse_ddd_alexandra.__main__:main"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]
-tests = ["tests", "*/tests"]
+# tests = ["tests", "*/tests"]
 
 [tool.coverage.run]
 branch = true
-source = ["warehouse_ddd_alexandra", "tests"]
+source = ["warehouse_ddd_alexandra"]
+# source = ["warehouse_ddd_alexandra", "tests"]
 
 [tool.coverage.report]
 show_missing = true
