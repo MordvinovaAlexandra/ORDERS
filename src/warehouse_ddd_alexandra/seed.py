@@ -31,13 +31,6 @@ def seed_db(session: Session):
         services.allocate(line, repo, session)
 
 if __name__ == "__main__":
-    engine = create_engine(build_db_uri(".env"))
-    get_session = sessionmaker(bind=engine)
-
-    try:
-        metadata.create_all(bind=engine)
-        start_mappers()
-    except Exception:
-        pass
+    
 
 seed_db(get_session())
